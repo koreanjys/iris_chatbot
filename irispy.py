@@ -13,9 +13,10 @@ bot = Bot(iris_url)
 #메시지 감지
 @bot.on_event("message")
 def on_message(chat: ChatContext):
-    match chat.message.command:
-        case "!hi":
-            chat.reply(f"Hello, {chat.sender.name}!")
+    if chat.room.id == 18247793138980592:  #특정 방에서만 반응
+        match chat.message.command:
+            case "!안녕":
+                chat.reply(f"안녕, {chat.sender.name}! 좋은 밤 보내!")
 
 #입장감지
 @bot.on_event("new_member")
