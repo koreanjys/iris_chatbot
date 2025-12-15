@@ -26,11 +26,11 @@ def on_message(chat: ChatContext):
         if chat.message.command.startswith("!"):
             try:
                 prompt = "프롬프트에 유머러스하게 한국어로 200 자 이내로 답변해. 프롬프트 : " + chat.message.command[1:]  #명령어 앞의 '!' 제거
-                response = model.generate_content(prompt)
+                response = model.generate_content(prompt).text
                 # chat.reply(f"안녕, {chat.sender.name}! 좋은 밤 보내!")
                 chat.reply(response)
             except Exception as e:
-                chat.reply("빻봇은 토큰을 모으고 있어요. 잠시 후에 다시 시도해주세요!")
+                chat.reply(str(e))
 
 #입장감지
 @bot.on_event("new_member")
