@@ -9,7 +9,7 @@ import google.generativeai as genai
 load_dotenv()
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
 genai.configure(api_key=GEMINI_API_KEY)
-model = genai.GenerativeModel("gemini-1.5-flash-002")
+model = genai.GenerativeModel("gemini-2.5-flash")
 
 if len(sys.argv) < 2:
     print("Usage: python irispy.py {아이리스HOST}:3000")  # 127.0.0.1:3000
@@ -30,7 +30,7 @@ def on_message(chat: ChatContext):
                 # chat.reply(f"안녕, {chat.sender.name}! 좋은 밤 보내!")
                 chat.reply(response)
             except Exception as e:
-                chat.reply(str(e))
+                chat.reply("빻봇은 토큰을 모으고 있어요... 잠시 후에 다시 시도해주세요!")
 
 #입장감지
 @bot.on_event("new_member")
