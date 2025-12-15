@@ -29,8 +29,8 @@ def on_message(chat: ChatContext):
                 response = model.generate_content(prompt, max_output_tokens=500)
                 # chat.reply(f"안녕, {chat.sender.name}! 좋은 밤 보내!")
                 chat.reply(response)
-            except:
-                chat.reply("빻봇은 토큰을 모으고 있어요... 잠시 후에 다시 시도해주세요!")
+            except Exception as e:
+                chat.reply(str(e))
 
 #입장감지
 @bot.on_event("new_member")
