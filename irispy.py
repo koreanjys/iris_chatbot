@@ -51,7 +51,8 @@ def on_message(chat: ChatContext):
                     google_search=types.GoogleSearch()
                 )
                 config = types.GenerateContentConfig(
-                    tools=[grounding_tool]
+                    tools=[grounding_tool],
+                    system_instruction="Please summarize the content of the webpage provided as a URL in korean"
                 )
                 response = client.models.generate_content(
                     model="gemini-2.5-flash-lite",
