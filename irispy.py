@@ -1,7 +1,9 @@
 
 import sys
 import os
+import requests
 
+from bs4 import BeautifulSoup
 from dotenv import load_dotenv
 from iris import Bot, ChatContext, IrisLink
 from google import genai
@@ -47,19 +49,45 @@ def on_message(chat: ChatContext):
         
         elif chat.message.command.startswith("https://") or chat.message.command.startswith("http://"):
             try:
-                grounding_tool = types.Tool(
-                    google_search=types.GoogleSearch()
-                )
+                url = chat.message.command.strip()
+                # 웹페이지 가져오기
+                response = requests.get(url, timeout=10, headers={
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+                })
+                response.raise_for_status()
+                # HTML 파싱
+                soup = BeautifulSoup(response.text, 'html.parser')
+                
+                # 불필요한 태그 제거
+                for tag in soup(['script', 'style', 'nav', 'header', 'footer', 'aside', 'ad', 'iframe']):
+                    tag.decompose()
+                
+                # article 태그 우선 찾기 (뉴스 본문)
+                article = soup.find('article')
+                if article:
+                    text = article.get_text(separator='\n', strip=True)
+                else:
+                    # article이 없으면 전체 본문
+                    text = soup.get_text(separator='\n', strip=True)
+                
+                # 공백 정리
+                lines = [line.strip() for line in text.splitlines() if line.strip()]
+                text = '\n'.join(lines)
+                
+                # 너무 길면 자르기 (토큰 제한)
+                if len(text) > 15000:
+                    text = text[:15000]
+                
+                # Gemini로 요약
                 config = types.GenerateContentConfig(
-                    tools=[grounding_tool],
-                    system_instruction="Please summarize the content of the webpage provided as a URL in korean"
+                    system_instruction="다음은 뉴스 기사 본문이야. 핵심 내용을 3-5문장으로 한국어로 요약해줘."
                 )
-                response = client.models.generate_content(
+                summary_response = client.models.generate_content(
                     model="gemini-2.5-flash-lite",
-                    contents=chat.message.command,
+                    contents=text,
                     config=config,
                 )
-                chat.reply(response.text)
+                chat.reply(summary_response.text)
             except Exception as e:
                 chat.reply(f"{chat.sender.name}, 빻봇은 토큰을 모으고 있어요... 잠시 후에 다시 시도해줘!")
 
