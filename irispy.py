@@ -27,12 +27,12 @@ bot = Bot(iris_url)
 @bot.on_event("message")
 def on_message(chat: ChatContext):
     if chat.room.id == 18247793138980592:  #특정 방에서만 반응
-        if chat.message.command.startswith("!"):
+        if chat.message.msg.startswith("!"):
             try:
                 if len(conversation_history) > 20:
                     conversation_history[:] = conversation_history[10:]
 
-                conversation_history.append({"role": "user", "content": chat.message.command[1:]})
+                conversation_history.append({"role": "user", "content": chat.message.msg[1:]})
 
                 interaction = client.interactions.create(
                     model="gemini-2.5-flash-lite",
@@ -47,9 +47,9 @@ def on_message(chat: ChatContext):
             except Exception as e:
                 chat.reply(f"{chat.sender.name}, 빻봇은 토큰을 모으고 있어요... 잠시 후에 다시 시도해줘!")
         
-        elif chat.message.command.startswith("https://") or chat.message.command.startswith("http://"):
+        elif chat.message.msg.startswith("https://") or chat.message.msg.startswith("http://"):
             try:
-                url = chat.message.command.strip()
+                url = chat.message.msg.strip()
                 # 웹페이지 가져오기
                 response = requests.get(url, timeout=10, headers={
                     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
