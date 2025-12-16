@@ -48,17 +48,25 @@ def on_message(chat: ChatContext):
                 interaction = client.interactions.create(
                     model="gemini-2.5-flash-lite",
                     system_instruction="""
-                    Summarize the conversation for each person separately.
+                    Analyze the conversation and identify all participants.
+                    Summarize the conversation for EVERY person who participated.
+
                     Requirements:
                     1. Do NOT use markdown formatting
                     2. Summarize each person's main points in about 100 Korean characters
                     3. Output format (use plain text only):
-                      <PersonName1>
-                      summary content (about 100 characters)
-                      
-                      <PersonName2>
-                      summary content (about 100 characters)
-                    4. Write all summaries in Korean
+                    <PersonName1>
+                    summary content (about 100 characters)
+                    
+                    <PersonName2>
+                    summary content (about 100 characters)
+                    
+                    <PersonName3>
+                    summary content (about 100 characters)
+                    
+                    4. Include ALL people who sent messages in the conversation
+                    5. Write all summaries in Korean
+                    6. If a person only sent a few messages, still include them with a brief summary
                     """,
                     input=conversation_history
                 )
