@@ -65,8 +65,8 @@ def on_message(chat: ChatContext):
                     summary content (about 100 characters)
                     
                     4. Include ALL people who sent messages in the conversation
-                    5. Write all summaries in Korean
-                    6. If a person only sent a few messages, still include them with a brief summary
+                    5. If a person only sent a few messages, still include them with a brief summary
+                    6. Write all summaries in Korean
                     """,
                     input=conversation_history
                 )
