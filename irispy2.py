@@ -11,7 +11,7 @@ load_dotenv()
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(name)s - %(levelname)s\n%(message)s",
-    filename=".log/irispy2.log",
+    filename="./log/irispy2.log",
     encoding="utf-8"
 )
 
