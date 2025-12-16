@@ -47,7 +47,7 @@ def on_message(chat: ChatContext):
             try:
                 interaction = client.interactions.create(
                     model="gemini-2.5-flash-lite",
-                    system_instruction=f"대화 한 사람별로 이름과 대화 내용을 구분해서 채팅 내용을 요약해 주세요.",
+                    system_instruction=f"대화 한 사람별로 이름과 대화 내용을 구분해서 각 사람별로 간략하게 요약해 주세요.",
                     input=conversation_history
                 )
                 bot_response = interaction.outputs[-1].text
