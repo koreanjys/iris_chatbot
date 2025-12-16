@@ -1,15 +1,21 @@
-
 import sys
 import os
-import requests
+import logging
 
-from bs4 import BeautifulSoup
 from dotenv import load_dotenv
 from iris import Bot, ChatContext, IrisLink
 from google import genai
 from google.genai import types
 
 load_dotenv()
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    filename=".log/irispy2.log",
+    filemode="a",
+    encoding="utf-8"
+)
+
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
 client = genai.Client(api_key=GEMINI_API_KEY)
 conversation_history = []
@@ -41,6 +47,7 @@ def on_message(chat: ChatContext):
                 chat.reply(bot_response)
             except Exception as e:
                 chat.reply(f"{chat.sender.name}, 빻봇은 토큰을 모으고 있어요... 잠시 후에 다시 시도해줘!")
+                logging.error(f"Error during summarization: {e}")
         
 #입장감지
 @bot.on_event("new_member")
