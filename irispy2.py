@@ -47,7 +47,16 @@ def on_message(chat: ChatContext):
             try:
                 interaction = client.interactions.create(
                     model="gemini-2.5-flash-lite",
-                    system_instruction=f"대화 한 사람별로 이름과 대화 내용을 구분해서 각 사람별로 100자 이내로 주요 내용만 간략하게 요약해 주세요.",
+                    system_instruction="""
+                    Summarize the conversation for each person separately.
+                    Requirements:
+                    1. Do NOT use markdown formatting
+                    2. Summarize each person's main points in about 100 Korean characters
+                    3. Output format (use plain text only):
+                      PersonName1: summary content (about 100 characters)
+                      PersonName2: summary content (about 100 characters)
+                    4. Write all summaries in Korean
+                    """,
                     input=conversation_history
                 )
                 bot_response = interaction.outputs[-1].text
