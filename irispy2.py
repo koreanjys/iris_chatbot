@@ -55,14 +55,14 @@ def on_message(chat: ChatContext):
                     1. Do NOT use markdown formatting
                     2. Summarize each person's main points in about 100 Korean characters
                     3. Output format (use plain text only):
-                    <PersonName1>
-                    summary content (about 100 characters)
-                    
-                    <PersonName2>
-                    summary content (about 100 characters)
-                    
-                    <PersonName3>
-                    summary content (about 100 characters)
+                        <PersonName1>
+                        summary content (about 100 characters)
+                        
+                        <PersonName2>
+                        summary content (about 100 characters)
+                        
+                        <PersonName3>
+                        summary content (about 100 characters)
                     
                     4. Include ALL people who sent messages in the conversation
                     5. If a person only sent a few messages, still include them with a brief summary
