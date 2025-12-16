@@ -8,10 +8,14 @@ from google import genai
 from google.genai import types
 
 load_dotenv()
+log_dir = "./log"
+os.makedirs(log_dir, exist_ok=True)
+
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(name)s - %(levelname)s\n%(message)s",
-    filename="./log/irispy2.log",
+    filename=f"{log_dir}/irispy2.log",
+    filemode='a',
     encoding="utf-8"
 )
 
