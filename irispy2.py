@@ -36,9 +36,13 @@ bot = Bot(iris_url)
 @bot.on_event("message")
 def on_message(chat: ChatContext):
     if chat.room.id == 18247793138980592:  #특정 방에서만 반응
+
         if len(conversation_history) > 100:
             conversation_history[:] = conversation_history[10:]
-            conversation_history.append({"role": "user", "content": f"Name='{chat.sender.name}': Chat='{chat.message.msg}'"})
+
+        # 메세지 기록 (100개)
+        conversation_history.append({"role": "user", "content": f"Name='{chat.sender.name}': Chat='{chat.message.msg}'"})
+
         if chat.message.msg.startswith("!요약") and chat.sender.id == 143365411:
             try:
                 interaction = client.interactions.create(
