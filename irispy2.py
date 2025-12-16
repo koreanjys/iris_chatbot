@@ -64,6 +64,7 @@ def on_message(chat: ChatContext):
                 )
                 bot_response = interaction.outputs[-1].text
                 chat.reply(bot_response)
+                conversation_history.clear()
             except Exception as e:
                 chat.reply(f"{chat.sender.name}, 빻봇은 토큰을 모으고 있어요... 잠시 후에 다시 시도해줘!")
                 logging.error(f"Error during summarization: {e}")
