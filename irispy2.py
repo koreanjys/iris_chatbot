@@ -43,7 +43,7 @@ def on_message(chat: ChatContext):
         # 메세지 기록 (100개)
         conversation_history.append({"role": "user", "content": f"Name='{chat.sender.name}': Chat='{chat.message.msg}'"})
 
-        if chat.message.msg.startswith("!요약") and chat.sender.id == 143365411:
+        if chat.message.msg.startswith("!요약") and (chat.sender.id == 143365411 or chat.sender.id == 6847610907789162832):
             try:
                 interaction = client.interactions.create(
                     model="gemini-2.5-flash-lite",
