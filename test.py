@@ -1,7 +1,7 @@
 from google import genai
 from google.genai import types
 
-GEMINI_API_KEY="AIzaSyA3znEN2iafUtuq59QS55fsdE-SoMjSPR4"
+GEMINI_API_KEY=""
 client = genai.Client(api_key=GEMINI_API_KEY)
 
 grounding_tool = types.Tool(
